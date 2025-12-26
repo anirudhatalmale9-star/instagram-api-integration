@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: instagram-api-integration-test
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          instagram:
+            client-id: test-client-id
+            client-secret: test-client-secret
+            redirect-uri: http://localhost:8080/api/instagram/callback
+            scope: instagram_basic,instagram_content_publish
+
+instagram:
+  api:
+    base-url: https://graph.instagram.com
+    oauth-url: https://api.instagram.com/oauth
+    facebook-graph-url: https://graph.facebook.com/v18.0

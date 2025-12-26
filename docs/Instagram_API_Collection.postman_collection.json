@@ -1,0 +1,204 @@
+{
+  "info": {
+    "_postman_id": "instagram-api-integration",
+    "name": "Instagram API Integration",
+    "description": "Collection for testing Instagram Graph API integration endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "user123",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Link Account",
+      "item": [
+        {
+          "name": "1a. Initiate OAuth Flow",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/instagram/link?userId={{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "instagram", "link"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{userId}}",
+                  "description": "Your application's user identifier"
+                }
+              ]
+            },
+            "description": "Initiates the OAuth flow. Returns an authorization URL that the user should be redirected to."
+          },
+          "response": []
+        },
+        {
+          "name": "1b. OAuth Callback (Automatic)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/instagram/callback?code=AUTH_CODE_HERE&state=STATE_HERE",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "instagram", "callback"],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "AUTH_CODE_HERE",
+                  "description": "Authorization code from OAuth redirect"
+                },
+                {
+                  "key": "state",
+                  "value": "STATE_HERE",
+                  "description": "State parameter for CSRF protection"
+                }
+              ]
+            },
+            "description": "Handles the OAuth callback. This is called automatically by Facebook after user authorization."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Fetch Data",
+      "item": [
+        {
+          "name": "2a. Fetch Profile & Media",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/instagram/data?userId={{userId}}&mediaLimit=25",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "instagram", "data"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{userId}}",
+                  "description": "Your application's user identifier"
+                },
+                {
+                  "key": "mediaLimit",
+                  "value": "25",
+                  "description": "Number of media items to fetch (default: 25, max: 100)"
+                }
+              ]
+            },
+            "description": "Fetches the user's Instagram profile and recent media (posts/reels)."
+          },
+          "response": []
+        },
+        {
+          "name": "2b. Check Link Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/instagram/status?userId={{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "instagram", "status"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{userId}}",
+                  "description": "Your application's user identifier"
+                }
+              ]
+            },
+            "description": "Checks if an Instagram account is linked for the specified user."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Token Management",
+      "item": [
+        {
+          "name": "3a. Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/instagram/refresh?userId={{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "instagram", "refresh"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{userId}}",
+                  "description": "Your application's user identifier"
+                }
+              ]
+            },
+            "description": "Refreshes an expired or expiring access token."
+          },
+          "response": []
+        },
+        {
+          "name": "3b. Unlink Account (Keep Data)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/instagram/unlink?userId={{userId}}&deleteData=false",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "instagram", "unlink"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{userId}}",
+                  "description": "Your application's user identifier"
+                },
+                {
+                  "key": "deleteData",
+                  "value": "false",
+                  "description": "If false, deactivates account but keeps data"
+                }
+              ]
+            },
+            "description": "Unlinks the Instagram account but retains stored data."
+          },
+          "response": []
+        },
+        {
+          "name": "3c. Unlink Account (Delete Data)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/instagram/unlink?userId={{userId}}&deleteData=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "instagram", "unlink"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{userId}}",
+                  "description": "Your application's user identifier"
+                },
+                {
+                  "key": "deleteData",
+                  "value": "true",
+                  "description": "If true, permanently deletes all stored data"
+                }
+              ]
+            },
+            "description": "Unlinks the Instagram account and permanently deletes all stored data."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
