@@ -9,6 +9,7 @@ A production-ready Spring Boot application for integrating with the Instagram Gr
 - **Token Management**: Automatic token refresh and long-lived token exchange
 - **Data Persistence**: PostgreSQL storage with JPA entities
 - **Error Handling**: Comprehensive exception handling with meaningful error responses
+- **Swagger UI**: Interactive API documentation and testing interface
 
 ## Prerequisites
 
@@ -58,6 +59,14 @@ mvn spring-boot:run
 ```
 
 The application will start on `http://localhost:8080`
+
+### 5. Access Swagger UI
+
+Open your browser and navigate to:
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **OpenAPI JSON**: http://localhost:8080/v3/api-docs
+
+The Swagger UI provides an interactive interface to test all API endpoints directly from your browser.
 
 ## Meta Developer Setup
 
